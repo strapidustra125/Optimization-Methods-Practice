@@ -5,6 +5,11 @@ VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simplex", "Simplex\Simplex.vcxproj", "{AF043501-7E91-4712-94CC-11C3C1800943}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ACC9100A-1BF6-4AE0-9045-538A0D9F1226}"
+	ProjectSection(SolutionItems) = preProject
+		Simplex\out.txt = Simplex\out.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
