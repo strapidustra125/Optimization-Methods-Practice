@@ -22,9 +22,12 @@ using namespace std;
 
 int n = 2;                  // Количество переменных (Х1 и Х2)
 double l = 2;               // Длина ребра симплекса
+double E = 0.1;
 double curMaxF = -99999999;
 int curIndex = 0;
 int oldIndex = -1;
+
+ofstream out("out.txt");
 
 
 // Заданная функция
@@ -84,7 +87,7 @@ void point::countNewPoint(point statrtPoint, int I)
 }
 
 
-void printSimplex(vector<point> vec, ofstream& out)
+void printSimplex(vector<point> vec)
 {
     for (int i = 0; i < 3; i++)
     {
@@ -98,6 +101,11 @@ void printSimplex(vector<point> vec, ofstream& out)
     out << endl;
 }
 
+
+/*  Получение координат новой отраженной точки
+ *  Проверка, если функция в этой точке >= функции в старой точке, то значение не меняется 
+ *
+ */
 
 vector<point> getMirrorSimplex(int curMaxIndex, vector<point> vec)
 {
@@ -117,7 +125,12 @@ vector<point> getMirrorSimplex(int curMaxIndex, vector<point> vec)
 
     newX1 = sum1 - vec[curMaxIndex].X1;
     newX2 = sum2 - vec[curMaxIndex].X2;
-    newP.init(newX1, newX2, curMaxIndex + 1);
+    newP.init(newX1, newX2, vec[curMaxIndex].i);
+
+    if (F(newP.X1, newP.X2) >= F(vec[curMaxIndex].X1, vec[curMaxIndex].X2))
+    {
+        newP = vec[curMaxIndex];
+    }
 
     for (int i = 0; i < 3; i++)
     {
@@ -145,20 +158,110 @@ void updateMaxPoint(vector<point> vec)
     }
 }
 
-void sortSimplexVector(vector<point> vec)
+/* Сортировка симплекса по убыванию значения функции
+ *
+ *
+ */
+
+vector<point> sortSimplexVector(vector<point> vec)
 {
-    if(F(vec[0].X1, vec[0].X2) > F(vec[1].X1, vec[1].X2)) 
+    vector<point> result = vec;
+    vector<point>::iterator i = result.begin();
+    point temp;
+
+    if (F(result[0].X1, result[0].X2) < F(result[1].X1, result[1].X2))
+    {
+        temp = result[1];
+        result[1] = result[0];
+        result[0] = temp;
+    }
+
+    if (F(result[1].X1, result[1].X2) < F(result[2].X1, result[2].X2))
+    {
+        temp = result[2];
+        result[2] = result[1];
+        result[1] = temp;
+    }
+
+    if (F(result[0].X1, result[0].X2) < F(result[1].X1, result[1].X2))
+    {
+        temp = result[1];
+        result[1] = result[0];
+        result[0] = temp;
+    }
+
+    return result;
+}
+
+
+/* Пройти из текущей точки до минимальной с заданной длиной ребра симплекса
+ * 
+ * point start - начальная точка
+ * 
+ * Возвращает точку с минимальным значением функции из текущих
+ */
+
+point findCurMinSimplex(point start)
+{
+    point p1, p2, p3;
+    vector<point> simplexNew, simplexCur;
+    bool stopFlag = false;
+    int vecPointer = 0;
+
+    p1.init(start.X1, start.X2, 1);
+    p2.countNewPoint(p1, 2);
+    p3.countNewPoint(p1, 3);
+
+    simplexCur.push_back(p1);
+    simplexCur.push_back(p2);
+    simplexCur.push_back(p3);
+
+    //printSimplex(simplexCur);
+
+    out << "Начало While... \n\n";
+
+    while (!stopFlag)
+    {
+        out << "Текущий симплекс... \n\n";
+        printSimplex(simplexCur);
+
+        out << "Сортировка... \n\n";
+        simplexCur = sortSimplexVector(simplexCur);
+
+        printSimplex(simplexCur);
+
+        out << "Отражение... \n\n";
+        simplexNew = getMirrorSimplex(vecPointer, simplexCur);
+
+        out << "Новый симплекс... \n\n";
+        printSimplex(simplexNew);
+
+        if (F(simplexNew[vecPointer].X1, simplexNew[vecPointer].X2) == F(simplexCur[vecPointer].X1, simplexCur[vecPointer].X2))
+        {
+
+
+            if (vecPointer != 2)
+            {
+                out << "Следующая точка... \n\n";
+                vecPointer++;
+            }
+            else stopFlag = true;
+        }
+        else simplexCur = simplexNew;
+    }
+
+    return simplexCur[2];
 }
 
 // Основной алгоритм
 
 int main()
 {
-    ofstream out("out.txt");
+    
 
     setlocale(LC_ALL, "Russian");
 
-    point p1, p2, p3;
+    point p1, p2, p3, newP;
     double curX1, curX2;
     vector<point> simplex;
     
@@ -171,57 +274,22 @@ int main()
     cout << "\nНачальная точка алгоритма: ( " << curX1 << " , " << curX2 << " )" << endl;
     cout << "Начальное значение длины ребра симплекса: " << l << endl;
 
-    
-
-
-
-    /*
-    printSimplex(simplex, out);
-
-    updateMaxPoint(simplex);
-
-    out << "Current Maximum F = " << curMaxF << endl;
-    out << "Current Index = " << curIndex + 1 << endl;
-
-    simplex = getMirrorSimplex(curIndex, simplex);
-
-    printSimplex(simplex, out);
-
-    updateMaxPoint(simplex);
-
-    out << "Current Maximum F = " << curMaxF << endl;
-    out << "Current Index = " << curIndex + 1 << endl;
-
-    */
-
 
     p1.init(curX1, curX2, 1);
-    p2.countNewPoint(p1, 2);
-    p3.countNewPoint(p1, 3);
 
-    simplex.push_back(p1);
-    simplex.push_back(p2);
-    simplex.push_back(p3);
-
-    while (oldIndex != curIndex)
+    while (l > E)
     {
-        printSimplex(simplex, out);
+        newP = findCurMinSimplex(p1);
 
-        updateMaxPoint(simplex);
+        l /= 2;
 
-        out << "Current Maximum F = " << curMaxF << endl;
-        out << "Current Index = " << curIndex + 1 << endl << endl;
-
-        simplex = getMirrorSimplex(curIndex, simplex);
+        p1.init(newP.X1, newP.X2, 1);
     }
-
-
-
-    /*
-    out << "\nНайден локальный экстремум в точке ( " << curX1 << " , " << curX2 << " )" << endl;
-    out << "Значение функции в этой точке: " << F(curX1, curX2);
-    */
-
+    
+    out << "\nНайден локальный экстремум в точке ( " << p1.X1 << " , " << p1.X2 << " )" << endl;
+    out << "Значение функции в этой точке: " << F(p1.X1, p1.X2) << endl;
+    out << "Длина ребра симплекса = " << l << endl;
+    out << "Точность = " << E << endl;
 
     return 0;
 }

@@ -1,2 +1,4 @@
 ﻿  Simplex.cpp
+E:\Documents\University\Методы оптимизации - Тананко - м-2 семестр\Optimization-Methods-Practice\Simplex\Simplex\Simplex.cpp(264,19): warning C4101: p3: неиспользованная локальная переменная
+E:\Documents\University\Методы оптимизации - Тананко - м-2 семестр\Optimization-Methods-Practice\Simplex\Simplex\Simplex.cpp(264,15): warning C4101: p2: неиспользованная локальная переменная
   Simplex.vcxproj -> E:\Documents\University\Методы оптимизации - Тананко - м-2 семестр\Optimization-Methods-Practice\Simplex\Debug\Simplex.exe
