@@ -1,4 +1,4 @@
 ﻿  Nelder-Mid.cpp
-e:\Documents\University\Методы оптимизации - Тананко - м-2 семестр\Optimization-Methods-Practice\Nelder-Mid\Nelder-Mid\Nelder-Mid.cpp(264,19): warning C4101: p3: неиспользованная локальная переменная
-e:\Documents\University\Методы оптимизации - Тананко - м-2 семестр\Optimization-Methods-Practice\Nelder-Mid\Nelder-Mid\Nelder-Mid.cpp(264,15): warning C4101: p2: неиспользованная локальная переменная
+E:\Documents\University\Методы оптимизации - Тананко - м-2 семестр\Optimization-Methods-Practice\Nelder-Mid\Nelder-Mid\Nelder-Mid.cpp(201,23): warning C4101: result: неиспользованная локальная переменная
+E:\Documents\University\Методы оптимизации - Тананко - м-2 семестр\Optimization-Methods-Practice\Nelder-Mid\Nelder-Mid\Nelder-Mid.cpp(201,31): warning C4101: tempP: неиспользованная локальная переменная
   Nelder-Mid.vcxproj -> E:\Documents\University\Методы оптимизации - Тананко - м-2 семестр\Optimization-Methods-Practice\Nelder-Mid\Debug\Nelder-Mid.exe
