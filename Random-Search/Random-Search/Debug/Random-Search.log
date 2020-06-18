@@ -1,3 +1,3 @@
 ﻿  Random-Search.cpp
-e:\Documents\University\Методы оптимизации - Тананко - м-2 семестр\Optimization-Methods-Practice\Random-Search\Random-Search\Random-Search.cpp(105,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+E:\Documents\University\Методы оптимизации - Тананко - м-2 семестр\Optimization-Methods-Practice\Random-Search\Random-Search\Random-Search.cpp(105,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
   Random-Search.vcxproj -> E:\Documents\University\Методы оптимизации - Тананко - м-2 семестр\Optimization-Methods-Practice\Random-Search\Debug\Random-Search.exe

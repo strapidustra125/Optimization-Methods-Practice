@@ -141,6 +141,8 @@ int main()
 
         if (pointF(newP) < pointF(p))
         {
+            out << "Точка удачная. Смена точки.\n" << endl;
+
             p = newP;
 
             randVecX1 = simpleVectorCreation(n);
@@ -156,6 +158,7 @@ int main()
             {
                 range /= 2;
                 i = 0;
+                out << "Радиус уменьшен вдвое\n" << endl;
             }
         }
     }
